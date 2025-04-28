@@ -9,3 +9,6 @@ migrate_up:
 
 migrate_down:
 	@migrate -database ${POSTGRESQL_URL} -path db/migrations down
+
+collect_quality:
+	@go run /home/ricliz/GolandProjects/sobes/main.go
