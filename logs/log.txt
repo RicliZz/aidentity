@@ -1,0 +1,9 @@
+{"level":"fatal","timestamp":"2025-04-29T11:30:40.954+0300","caller":"server/server.go:29","msg":"listen tcp: address 0.0.0.0: missing port in address","pid":21325}
+{"level":"fatal","timestamp":"2025-04-29T12:23:24.227+0300","caller":"server/server.go:29","msg":"listen tcp: address 0.0.0.0: missing port in address","pid":22614}
+{"level":"fatal","timestamp":"2025-04-29T12:24:42.759+0300","caller":"server/server.go:29","msg":"listen tcp: address 0.0.0.0: missing port in address","pid":22946}
+{"level":"info","timestamp":"2025-04-29T12:47:52.484+0300","caller":"app/app.go:65","msg":"Shutting down server...","pid":23173}
+{"level":"info","timestamp":"2025-04-29T12:47:52.485+0300","caller":"server/server.go:43","msg":"Shutdown completed before timeout.","pid":23173}
+{"level":"info","timestamp":"2025-04-29T12:47:55.491+0300","caller":"app/app.go:65","msg":"Shutting down server...","pid":24085}
+{"level":"info","timestamp":"2025-04-29T12:47:55.491+0300","caller":"server/server.go:43","msg":"Shutdown completed before timeout.","pid":24085}
+{"level":"info","timestamp":"2025-04-29T12:48:11.205+0300","caller":"app/app.go:65","msg":"Shutting down server...","pid":24232}
+{"level":"info","timestamp":"2025-04-29T12:48:11.206+0300","caller":"server/server.go:43","msg":"Shutdown completed before timeout.","pid":24232}

@@ -1,53 +1,72 @@
 package app
 
 import (
-	"database/sql"
+	"context"
 	"fmt"
-	"github.com/RicliZz/aidentity/pkg/utils"
+	"github.com/RicliZz/aidentity/internal/api"
+	"github.com/RicliZz/aidentity/internal/repositories/qualityRepository"
+	"github.com/RicliZz/aidentity/internal/server"
+	"github.com/RicliZz/aidentity/internal/services/qualityService"
+	"github.com/RicliZz/avito-internship-pvz-service/pkg/logger"
 	"github.com/gin-gonic/gin"
+	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/joho/godotenv"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 	"github.com/swaggo/swag/example/basic/docs"
 	"log"
 	"os"
+	"os/signal"
+	"syscall"
+	"time"
 )
 
 func Run() {
+	logger.InitLogger()
 	err := godotenv.Load()
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
 
-	dsn := fmt.Sprintf(
-		"host=%s user=%s password=%s dbname=%s port=%s sslmode=disable",
-		os.Getenv("DB_HOST"), os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_NAME"), os.Getenv("DB_PORT"),
-	)
-
-	_, err = sql.Open("postgres", dsn)
+	conn, err := pgxpool.New(context.Background(), os.Getenv("DATABASE_URL"))
 	if err != nil {
-		log.Fatal("Error with connection to database: ", err)
+		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
+		os.Exit(1)
 	}
-	log.Println("Connected to database successfully", os.Getenv("DATABASE_URL"))
+	defer conn.Close()
 
 	//repo
-
+	qualityRepo := qualityRepository.NewQualityRepository(conn)
 	//service
-
+	qualityServ := qualityService.NewQualityService(qualityRepo)
 	//handler
-
+	qualityHand := api.NewQualityHandlers(qualityServ)
 	//default route
 	router := gin.Default()
-	api := router.Group("/api/v1/")
+	API := router.Group("/api/v1")
 
 	//swagger
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	docs.SwaggerInfo.BasePath = "/api/v1"
 
 	//REGISTER_ROUTES
+	qualityHand.InitQualityHandlers(API)
 
-	server := utils.NewServer(os.Getenv("ADDR"), router)
-	log.Println("Server success running on port: ", os.Getenv("ADDR"))
-	utils.Start(server)
+	//Инициализация и конфигурация HTTP сервера
+	srv := server.NewAPIServer(router)
 
+	//Старт сервера
+	go srv.Start()
+
+	//Выключение
+	quit := make(chan os.Signal, 1)
+	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
+	<-quit
+	logger.Logger.Info("Shutting down server...")
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+	if err = srv.Shutdown(ctx); err != nil {
+		logger.Logger.Fatalw("Shutdown error",
+			"error", err)
+	}
 }

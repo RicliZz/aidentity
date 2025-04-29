@@ -1,6 +1,12 @@
 include .env
 export
 
+build:
+	@go build -o ./bin/app ./cmd/main.go
+
+run:build
+	@./bin/app
+
 new_migrate:
 	@migrate create -ext sql -dir db/migrations -seq ${name}
 
