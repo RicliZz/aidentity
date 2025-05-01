@@ -19,5 +19,6 @@ func (h *QualityHandlers) InitQualityHandlers(router *gin.RouterGroup) {
 	qualityRouter := router.Group("/quality")
 	{
 		qualityRouter.POST("/create")
+		qualityRouter.DELETE("/delete/:id")
 	}
 }

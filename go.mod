@@ -5,6 +5,7 @@ go 1.23.2
 require (
 	github.com/RicliZz/avito-internship-pvz-service v0.0.0-20250421171538-1ad8bc455415
 	github.com/gin-gonic/gin v1.10.0
+	github.com/google/uuid v1.6.0
 	github.com/jackc/pgx/v5 v5.7.4
 	github.com/joho/godotenv v1.5.1
 	github.com/swaggo/files v1.0.1
