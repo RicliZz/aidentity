@@ -12,6 +12,7 @@ type QualityRepositoryInterface interface {
 
 type AuthenticationRepositoryInterface interface {
 	CreateUser(newUser models.RegisterModel) (*models.User, error)
-	GetUserByEmail(email string) (string, error)
-	GetUserByTelegram(telegram string) (string, error)
+	GetUserByEmail(email string) (uuid.UUID, string, error)
+	GetUserByTelegram(telegram string) (uuid.UUID, string, error)
+	CreateSession(model models.CreateSessionModel) error
 }
