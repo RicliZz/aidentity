@@ -6,3 +6,8 @@ type QualityServiceInterface interface {
 	CreateQuality(c *gin.Context)
 	DeleteQuality(c *gin.Context)
 }
+
+type AuthenticationServiceInterface interface {
+	Register(c *gin.Context)
+	Login(c *gin.Context)
+}

@@ -9,3 +9,9 @@ type QualityRepositoryInterface interface {
 	CreateQuality(nameNewQuality string) error
 	DeleteQuality(qualityUUID uuid.UUID) (*models.Quality, error)
 }
+
+type AuthenticationRepositoryInterface interface {
+	CreateUser(newUser models.RegisterModel) (*models.User, error)
+	GetUserByEmail(email string) (string, error)
+	GetUserByTelegram(telegram string) (string, error)
+}

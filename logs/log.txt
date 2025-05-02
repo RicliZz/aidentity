@@ -7,3 +7,17 @@
 {"level":"info","timestamp":"2025-04-29T12:47:55.491+0300","caller":"server/server.go:43","msg":"Shutdown completed before timeout.","pid":24085}
 {"level":"info","timestamp":"2025-04-29T12:48:11.205+0300","caller":"app/app.go:65","msg":"Shutting down server...","pid":24232}
 {"level":"info","timestamp":"2025-04-29T12:48:11.206+0300","caller":"server/server.go:43","msg":"Shutdown completed before timeout.","pid":24232}
+{"level":"info","timestamp":"2025-05-02T10:20:55.971+0300","caller":"app/app.go:71","msg":"Shutting down server...","pid":23583}
+{"level":"info","timestamp":"2025-05-02T10:20:55.973+0300","caller":"server/server.go:43","msg":"Shutdown completed before timeout.","pid":23583}
+{"level":"info","timestamp":"2025-05-02T10:22:32.767+0300","caller":"app/app.go:71","msg":"Shutting down server...","pid":23725}
+{"level":"info","timestamp":"2025-05-02T10:22:32.769+0300","caller":"server/server.go:43","msg":"Shutdown completed before timeout.","pid":23725}
+{"level":"info","timestamp":"2025-05-02T10:31:29.888+0300","caller":"app/app.go:71","msg":"Shutting down server...","pid":24345}
+{"level":"info","timestamp":"2025-05-02T10:31:29.924+0300","caller":"server/server.go:43","msg":"Shutdown completed before timeout.","pid":24345}
+{"level":"info","timestamp":"2025-05-02T10:33:26.737+0300","caller":"app/app.go:71","msg":"Shutting down server...","pid":25953}
+{"level":"info","timestamp":"2025-05-02T10:33:26.737+0300","caller":"server/server.go:43","msg":"Shutdown completed before timeout.","pid":25953}
+{"level":"info","timestamp":"2025-05-02T10:38:38.092+0300","caller":"app/app.go:71","msg":"Shutting down server...","pid":26523}
+{"level":"info","timestamp":"2025-05-02T10:38:38.094+0300","caller":"server/server.go:43","msg":"Shutdown completed before timeout.","pid":26523}
+{"level":"info","timestamp":"2025-05-02T10:41:21.260+0300","caller":"app/app.go:78","msg":"Shutting down server...","pid":27107}
+{"level":"info","timestamp":"2025-05-02T10:41:21.260+0300","caller":"server/server.go:43","msg":"Shutdown completed before timeout.","pid":27107}
+{"level":"info","timestamp":"2025-05-02T10:41:33.887+0300","caller":"app/app.go:78","msg":"Shutting down server...","pid":27540}
+{"level":"info","timestamp":"2025-05-02T10:41:33.887+0300","caller":"server/server.go:43","msg":"Shutdown completed before timeout.","pid":27540}

@@ -4,8 +4,10 @@ import (
 	"context"
 	"fmt"
 	"github.com/RicliZz/aidentity/internal/api"
+	"github.com/RicliZz/aidentity/internal/repositories/authRepository"
 	"github.com/RicliZz/aidentity/internal/repositories/qualityRepository"
 	"github.com/RicliZz/aidentity/internal/server"
+	"github.com/RicliZz/aidentity/internal/services/authService"
 	"github.com/RicliZz/aidentity/internal/services/qualityService"
 	"github.com/RicliZz/avito-internship-pvz-service/pkg/logger"
 	"github.com/gin-gonic/gin"
@@ -28,19 +30,29 @@ func Run() {
 		log.Fatal("Error loading .env file")
 	}
 
-	conn, err := pgxpool.New(context.Background(), os.Getenv("DATABASE_URL"))
+	conn, err := pgxpool.New(context.Background(), os.Getenv("POSTGRESQL_URL"))
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
 		os.Exit(1)
 	}
 	defer conn.Close()
 
+	// Проверка соединения
+	err = conn.Ping(context.Background())
+	if err != nil {
+		log.Fatalf("Ping failed: %v\n", err)
+	}
+	fmt.Println("Successfully connected to the database")
+
 	//repo
 	qualityRepo := qualityRepository.NewQualityRepository(conn)
+	authRepo := authRepository.NewAuthenticationRepository(conn)
 	//service
 	qualityServ := qualityService.NewQualityService(qualityRepo)
+	authServ := authService.NewAuthenticationService(authRepo)
 	//handler
 	qualityHand := api.NewQualityHandlers(qualityServ)
+	authHand := api.NewAuthenticationHandler(authServ)
 	//default route
 	router := gin.Default()
 	API := router.Group("/api/v1")
@@ -51,6 +63,7 @@ func Run() {
 
 	//REGISTER_ROUTES
 	qualityHand.InitQualityHandlers(API)
+	authHand.InitAuthenticationHandlers(API)
 
 	//Инициализация и конфигурация HTTP сервера
 	srv := server.NewAPIServer(router)
