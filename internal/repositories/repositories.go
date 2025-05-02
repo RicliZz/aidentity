@@ -16,3 +16,7 @@ type AuthenticationRepositoryInterface interface {
 	GetUserByTelegram(telegram string) (uuid.UUID, string, error)
 	CreateSession(model models.CreateSessionModel) error
 }
+
+type ProfileRepositoryInterface interface {
+	CreateStudentProfile(userID uuid.UUID, newStudent models.StudentModel) error
+}

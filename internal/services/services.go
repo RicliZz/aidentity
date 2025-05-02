@@ -11,3 +11,7 @@ type AuthenticationServiceInterface interface {
 	Register(c *gin.Context)
 	Login(c *gin.Context)
 }
+
+type ProfileServiceInterface interface {
+	CreateProfile(c *gin.Context)
+}
