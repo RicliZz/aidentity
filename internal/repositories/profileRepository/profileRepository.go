@@ -40,7 +40,30 @@ func (r *ProfileRepository) CreateStudentProfile(userID uuid.UUID, newStudent mo
 	_, err = tx.Exec(context.Background(),
 		`INSERT INTO student ("userID", "studyYear", "specialityID") VALUES ($1, $2, $3)`,
 		userID, newStudent.StudyYear, specialityID)
+	insertProfession := func(profs []models.ProfessionModel, relation string) error {
+		for _, prof := range profs {
+			_, err := tx.Exec(context.Background(),
+				`INSERT INTO user_profession ("userID", "professionID", preference) VALUES ($1, $2, $3)`,
+				userID, prof.ID, relation)
+			if err != nil {
+				return err
+			}
+		}
+		return nil
+	}
 
+	if err = insertProfession(newStudent.LikedProfession, "liked"); err != nil {
+		return err
+	}
+	if err = insertProfession(newStudent.NotLikedProfession, "disliked"); err != nil {
+		return err
+	}
+	if err = insertProfession(newStudent.ParentProfession, "parent"); err != nil {
+		return err
+	}
+	if err = insertProfession(newStudent.DreamProfession, "dream"); err != nil {
+		return err
+	}
 	err = tx.Commit(context.Background())
 	if err != nil {
 		return err
